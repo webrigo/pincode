@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location Fetcher</title>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="fetchLocation()">Fetch Location</button>
+    <div id="map"></div>
+
+    <script>
+        function fetchLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, handleError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            // You can use the obtained latitude and longitude as needed
+            console.log("Latitude: " + latitude);
+            console.log("Longitude: " + longitude);
+
+            // Here, you can update the map or perform other actions with the obtained coordinates
+            updateMap(latitude, longitude);
+        }
+
+        function handleError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
+        }
+
+        function updateMap(latitude, longitude) {
+            // Here, you can use a mapping library or service to display the location on a map
+            // For simplicity, let's just update the content of a div with the coordinates
+            document.getElementById("map").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+        }
+    </script>
+</body>
+</html>
